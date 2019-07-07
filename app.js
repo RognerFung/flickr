@@ -9,7 +9,9 @@ app.use((req, res, next) => {
     next();
 })
 
+//follow security advice by expressjs
 app.disable('x-powered-by')
+
 app.use('/', router)
 
 app.use((err, req, res, next) => {

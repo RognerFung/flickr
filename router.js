@@ -6,6 +6,7 @@ const https = require('https')
 router.use(bodyParser.json())
 
 router.route('/')
+//get public feed images list
 .get(cors.cors, async (req, res, next) => {
     https.get('https://api.flickr.com/services/feeds/photos_public.gne?format=json', result => {
         let resultString = ''
@@ -15,13 +16,16 @@ router.route('/')
         })
 
         result.on('end', () => {
+            //result is a string started with 'jsonFlickrFeed(', followed by a json, end with a ')'. remove start and end to get the json
             const resultJson = JSON.parse(resultString.slice(15,-1))
             res.json(resultJson)
         })
     })
 })
+//get public feed images by input tags
 .post(cors.cors, async (req, res, next) => {
     console.log(req.body)
+    //replace space with comma
     const tags = req.body.tags.replace(/\s/g, ',')
     https.get(`https://api.flickr.com/services/feeds/photos_public.gne?tags=${tags}&format=json`, result => {
         let resultString = ''
