@@ -7,7 +7,7 @@ router.use(bodyParser.json())
 
 router.route('/')
 //get public feed images list
-.get(cors.cors, async (req, res, next) => {
+.get(async (req, res, next) => {
     https.get('https://api.flickr.com/services/feeds/photos_public.gne?format=json', result => {
         let resultString = ''
 
@@ -23,7 +23,7 @@ router.route('/')
     })
 })
 //get public feed images by input tags
-.post(cors.cors, async (req, res, next) => {
+.post(async (req, res, next) => {
     console.log(req.body)
     //replace space with comma
     const tags = req.body.tags.replace(/\s/g, ',')
